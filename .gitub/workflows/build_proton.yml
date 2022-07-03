@@ -1,7 +1,13 @@
 name: Build Proton
 
-# Allows manual actions, and runs on each commit and pull request
-on: [workflow_dispatch, push, pull_request]
+# Allows manual actions, and runs on each commit, relase, and pull request
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  release:
+    types:
+      - created
 
 jobs:
   docker-build:
