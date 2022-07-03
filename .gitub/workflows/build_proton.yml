@@ -1,0 +1,27 @@
+name: Build Proton
+
+# Allows manual actions, and runs on each commit and pull request
+on: [workflow_dispatch, push, pull_request]
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build using Docker
+    steps:
+      - name: Checkout the repository and all submodules (including any using Git LFS)
+        id: checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: Build proton and generate a redist package
+        id: make
+        run: make redist
+        
+      - name: Upload redist package artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Proton
+          path: redist/*
+     
